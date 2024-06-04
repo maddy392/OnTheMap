@@ -17,21 +17,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qa4-eM-8k2" userLabel="Email Text Field">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qa4-eM-8k2" userLabel="Email Text Field">
                                 <rect key="frame" x="16" y="367" width="361" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" textContentType="email"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3NJ-AG-PIw" userLabel="Password Text Field">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3NJ-AG-PIw" userLabel="Password Text Field">
                                 <rect key="frame" x="16" y="420" width="361" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b2D-VU-eRu">
-                                <rect key="frame" x="159" y="462" width="75" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b2D-VU-eRu" userLabel="LoginButton">
+                                <rect key="frame" x="174.66666666666666" y="464" width="44" height="34"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Login">
                                     <color key="titleColor" name="AccentColor"/>
@@ -40,12 +37,35 @@
                                     <action selector="loginButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dWC-LE-5pZ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mlp-b0-ado" userLabel="LoginWithFB Button" customClass="FBSDKLoginButton">
+                                <rect key="frame" x="106.66666666666669" y="611" width="180" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="LQc-Pg-kCR"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" name="AccentColor"/>
+                                </state>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="3NJ-AG-PIw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3Cr-zO-qAu"/>
+                            <constraint firstItem="Mlp-b0-ado" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3cb-Y3-DOD"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Mlp-b0-ado" secondAttribute="bottom" constant="173" id="9ei-kb-aih"/>
+                            <constraint firstItem="Mlp-b0-ado" firstAttribute="top" secondItem="b2D-VU-eRu" secondAttribute="bottom" constant="113" id="G0q-LF-fVX"/>
+                            <constraint firstItem="qa4-eM-8k2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="N3Y-zW-ytD"/>
+                            <constraint firstItem="qa4-eM-8k2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Rzk-U4-kUi"/>
+                            <constraint firstItem="qa4-eM-8k2" firstAttribute="leading" secondItem="3NJ-AG-PIw" secondAttribute="leading" id="fn0-Gq-aiP"/>
+                            <constraint firstItem="qa4-eM-8k2" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="308" id="gpa-sB-4dt"/>
+                            <constraint firstItem="b2D-VU-eRu" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="sSq-9R-2KD"/>
+                            <constraint firstItem="b2D-VU-eRu" firstAttribute="top" secondItem="3NJ-AG-PIw" secondAttribute="bottom" constant="10" id="yZk-6s-JHo"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="emailTextField" destination="qa4-eM-8k2" id="4dT-zV-ESR"/>
+                        <outlet property="loginWithFBButton" destination="Mlp-b0-ado" id="THf-xH-RYx"/>
                         <outlet property="passwordTextField" destination="3NJ-AG-PIw" id="C21-Xy-5BK"/>
                         <segue destination="8iD-PW-8zs" kind="show" identifier="completeLogin" id="MQp-Zi-DC1"/>
                     </connections>
@@ -54,7 +74,7 @@
             </objects>
             <point key="canvasLocation" x="-141.22137404580153" y="4.9295774647887329"/>
         </scene>
-        <!--Item 2-->
+        <!--List View-->
         <scene sceneID="STM-tb-w2F">
             <objects>
                 <viewController id="u7O-eR-ypv" sceneMemberID="viewController">
@@ -64,7 +84,7 @@
                         <viewLayoutGuide key="safeArea" id="bH5-zz-VEM"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="LuU-RT-RUt"/>
+                    <tabBarItem key="tabBarItem" title="List View" image="list.dash" catalog="system" id="LuU-RT-RUt"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fo6-w2-8pP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -107,6 +127,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="list.dash" catalog="system" width="128" height="85"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
