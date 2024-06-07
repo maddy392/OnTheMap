@@ -113,7 +113,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="g3J-Y9-haQ">
-                        <barButtonItem key="leftBarButtonItem" image="mappin.and.ellipse" catalog="system" style="done" id="G7q-BE-jeF"/>
+                        <barButtonItem key="leftBarButtonItem" image="mappin.and.ellipse" catalog="system" style="done" id="G7q-BE-jeF">
+                            <connections>
+                                <action selector="postALocation:" destination="u7O-eR-ypv" id="rkY-JL-UH3"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Logout" id="q8H-VC-PcL">
                             <connections>
                                 <action selector="logoutTapped:" destination="u7O-eR-ypv" id="1Zv-Xe-h3E"/>
@@ -152,7 +156,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="6Vd-dz-ffM">
-                        <barButtonItem key="leftBarButtonItem" image="mappin.and.ellipse" catalog="system" style="done" id="aty-mh-57Z"/>
+                        <barButtonItem key="leftBarButtonItem" image="mappin.and.ellipse" catalog="system" style="done" id="aty-mh-57Z">
+                            <connections>
+                                <action selector="postALocation:" destination="PUp-yP-9Aj" id="QsH-ZR-cM8"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Logout" id="OY9-kx-3l2">
                             <connections>
                                 <action selector="logoutTapped:" destination="PUp-yP-9Aj" id="UXE-O0-htT"/>
@@ -168,10 +176,10 @@
             </objects>
             <point key="canvasLocation" x="2515.2671755725191" y="-344.36619718309862"/>
         </scene>
-        <!--View Controller-->
+        <!--SetLocation View Controller-->
         <scene sceneID="dbn-Ng-AsK">
             <objects>
-                <viewController id="nSM-pj-Wfg" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="nSM-pj-Wfg" userLabel="SetLocation View Controller" customClass="SetLocationViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZVe-br-1ee">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -186,19 +194,22 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter Your Location Here" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="InR-0r-MFn">
-                                <rect key="frame" x="16" y="287" width="361" height="236"/>
+                                <rect key="frame" x="16" y="287" width="361" height="275"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="noK-cj-XOr">
-                                <rect key="frame" x="16" y="615" width="361" height="34"/>
+                                <rect key="frame" x="16" y="654" width="361" height="34"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Find on the Map">
                                     <color key="titleColor" name="AccentColor"/>
                                     <color key="titleShadowColor" systemColor="secondaryLabelColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="findOnMap:" destination="nSM-pj-Wfg" eventType="touchUpInside" id="H3L-2h-sgA"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8zR-nR-DV2"/>
@@ -217,10 +228,68 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="zd9-It-6Yc"/>
+                    <connections>
+                        <outlet property="locationTextView" destination="InR-0r-MFn" id="S2y-SS-owx"/>
+                        <segue destination="31x-L1-uMi" kind="show" identifier="geocode" id="b3o-41-WY5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V5n-oM-DZ1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3420.6106870229005" y="-44.366197183098592"/>
+        </scene>
+        <!--Post Location View Controller-->
+        <scene sceneID="MpY-4e-JK6">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="31x-L1-uMi" customClass="PostLocationViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2Rb-LP-Mv9">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kj3-Hb-35b">
+                                <rect key="frame" x="0.0" y="149" width="393" height="565"/>
+                                <standardMapConfiguration key="preferredConfiguration"/>
+                            </mapView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Enter your URL here" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rre-kM-mic">
+                                <rect key="frame" x="0.0" y="56" width="393" height="94"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oJb-Dt-RiW">
+                                <rect key="frame" x="16" y="722" width="361" height="35"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Submit">
+                                    <color key="titleColor" name="AccentColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="submitTapped:" destination="31x-L1-uMi" eventType="touchUpInside" id="ygC-RJ-gkx"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="9cC-0U-LRx"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="oJb-Dt-RiW" firstAttribute="top" secondItem="kj3-Hb-35b" secondAttribute="bottom" constant="8" symbolic="YES" id="6UL-Ly-vyE"/>
+                            <constraint firstItem="9cC-0U-LRx" firstAttribute="bottom" secondItem="oJb-Dt-RiW" secondAttribute="bottom" constant="85" id="8ir-tQ-UEY"/>
+                            <constraint firstItem="kj3-Hb-35b" firstAttribute="leading" secondItem="9cC-0U-LRx" secondAttribute="leading" id="Wx0-K7-1oj"/>
+                            <constraint firstItem="kj3-Hb-35b" firstAttribute="top" secondItem="9cC-0U-LRx" secondAttribute="top" constant="93" id="Xh0-m4-IKu"/>
+                            <constraint firstItem="kj3-Hb-35b" firstAttribute="trailing" secondItem="9cC-0U-LRx" secondAttribute="trailing" id="a3S-8P-nT3"/>
+                            <constraint firstItem="oJb-Dt-RiW" firstAttribute="leading" secondItem="9cC-0U-LRx" secondAttribute="leading" constant="16" id="g7V-nU-bJ5"/>
+                            <constraint firstItem="9cC-0U-LRx" firstAttribute="trailing" secondItem="oJb-Dt-RiW" secondAttribute="trailing" constant="16" id="pD6-6P-2M2"/>
+                            <constraint firstItem="9cC-0U-LRx" firstAttribute="bottom" secondItem="kj3-Hb-35b" secondAttribute="bottom" constant="128" id="z85-bW-g2Z"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="DH8-bt-Spy"/>
+                    <connections>
+                        <outlet property="mapView" destination="kj3-Hb-35b" id="6dz-lv-s6C"/>
+                        <outlet property="mediaURLTextView" destination="rre-kM-mic" id="TMg-yX-Yt8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5u6-CR-vWg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4264.8854961832058" y="-44.366197183098592"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="cwN-d6-7AY">

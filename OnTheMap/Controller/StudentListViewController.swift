@@ -68,4 +68,7 @@ extension StudentListViewController: UITableViewDataSource, UITableViewDelegate 
         present(alertVC, animated: true)
     }
     
+    @IBAction func postALocation(_ sender: Any) {
+        performSegue(withIdentifier: "addLocation", sender: nil)
+    }
 }

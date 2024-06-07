@@ -17,28 +17,37 @@ class StudentMapViewController: UIViewController, MKMapViewDelegate {
 
         // Do any additional setup after loading the view.
         mapView.delegate = self
+        reloadMapData()
         
-        // Do any additional setup after loading the view.
-        let _ = UdacityClient.getStudentList { students, error in
-            StudentList.studentList = students
-//            print(StudentList.annotations)
-            
-            DispatchQueue.main.async {
-                self.reloadMapData()
-            }
-        }
+//        // Do any additional setup after loading the view.
+//        let _ = UdacityClient.getStudentList { students, error in
+//            StudentList.studentList = students
+////            print(StudentList.annotations)
+//            
+//            DispatchQueue.main.async {
+//                self.reloadMapData()
+//            }
+//        }
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.title = "Map View"
-
+        self.reloadMapData()
     }
     
     func reloadMapData() {
-        mapView.removeAnnotations(mapView.annotations)
-        mapView.addAnnotations(StudentList.annotations)
+        
+        let _ = UdacityClient.getStudentList { students, error in
+            print("Fetching student data")
+            StudentList.studentList = students
+            
+            DispatchQueue.main.async {
+                self.mapView.removeAnnotations(self.mapView.annotations)
+                self.mapView.addAnnotations(StudentList.annotations)
+            }
+        }
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: any MKAnnotation) -> MKAnnotationView? {
@@ -82,5 +91,11 @@ class StudentMapViewController: UIViewController, MKMapViewDelegate {
         alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alertVC, animated: true)
     }
+    
+    
+    @IBAction func postALocation(_ sender: Any) {
+        performSegue(withIdentifier: "addLocation", sender: nil)
+    }
+    
 
 }

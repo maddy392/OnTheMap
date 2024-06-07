@@ -27,8 +27,8 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        emailTextField.text = ""
-        passwordTextField.text = ""
+        emailTextField.text = "maddy392@gmail.com"
+        passwordTextField.text = "Panimavi1!"
     }
     
     
@@ -64,15 +64,10 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
     
     
     @IBAction func loginButtonTapped(_ sender: Any) {
-//        setLogginIn(true)
-//        passwordTextField.text = ""
         UdacityClient.udacityLogin(username: emailTextField.text ?? "", password: passwordTextField.text ?? "") { success, error in
-            print(success)
-//            DispatchQueue.main.async {
-//                                self.performSegue(withIdentifier: "completeLogin", sender: nil)
-//                            }
-                        if success {
+            if success {
                 print("Login Success")
+                UdacityClient.getPublicUserData()
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "completeLogin", sender: nil)
                 }

@@ -12,19 +12,27 @@ class UdacityClient {
     struct Auth {
         static var sessionId = ""
         static var udacityAccountId = ""
+        static var firstName = ""
+        static var lastName = ""
     }
     
     enum Endpoints {
         static let basePath = "https://onthemap-api.udacity.com/v1"
         static let postSessionPath = "/session"
+        static let postLocationPath = "/StudentLocation"
+        static let publicUserDataPath = "/users/"
         
         case postSession
         case getStudentList
+        case postLocation
+        case getPublicUserdata(String)
         
         var stringValue: String {
             switch self {
             case .postSession: return Endpoints.basePath + Endpoints.postSessionPath
             case .getStudentList: return Endpoints.basePath + "/StudentLocation?limit=100&order=-updatedAt"
+            case .postLocation: return Endpoints.basePath + Endpoints.postLocationPath
+            case .getPublicUserdata(let userId): return Endpoints.basePath + Endpoints.publicUserDataPath + userId
             }
         }
         
@@ -50,6 +58,7 @@ class UdacityClient {
             do {
                 let responseObject = try decoder.decode(PostSessionResponse.self, from: data)
                 Auth.sessionId = responseObject.session.sessionId
+                Auth.udacityAccountId = responseObject.account.key
                 completionHandler(true, nil)
             } catch {
                 do {
@@ -65,6 +74,64 @@ class UdacityClient {
         }
     task.resume()
     }
+    
+    class func postStudentLocation(studentInfo: PostStudentLocation, completionHandler: @escaping (Bool, Error?) -> Void) {
+        
+        var request = URLRequest(url: Endpoints.postLocation.url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! JSONEncoder().encode(studentInfo)
+        
+        let task = URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            if error != nil {
+                completionHandler(false, error)
+                return
+            }
+            
+            print("Received Data")
+            guard let data = data else {
+                return
+            }
+            
+            print(String(data: data, encoding: .utf8)!)
+            
+            let decoder = JSONDecoder()
+            do {
+                let responseObject = try decoder.decode(PostStudentLocationResponse.self, from: data)
+                print(responseObject)
+                completionHandler(true, nil)
+            } catch {
+                print("Decode failed")
+                completionHandler(false, error)
+            }
+        }
+        task.resume()
+    }
+    
+    
+    class func getPublicUserData() {
+        let task = URLSession.shared.dataTask(with: Endpoints.getPublicUserdata(Auth.udacityAccountId).url) {
+            data, response, error in
+            guard var data = data else {
+//                print("guard statement failed")
+                return
+            }
+            data = data.dropFirst(5)
+//            print(String(data: data, encoding: .utf8)!)
+            let decoder = JSONDecoder()
+            do {
+                let responseObject = try decoder.decode(UserPublicData.self, from: data)
+                Auth.firstName = responseObject.firstName
+                Auth.lastName = responseObject.lastName
+                print(Auth.udacityAccountId, Auth.firstName, Auth.lastName)
+            } catch {
+                print("Decode Error")
+            }
+        }
+        task.resume()
+    }
+    
     
     class func deleteSession() {
         // same url as posting a session
