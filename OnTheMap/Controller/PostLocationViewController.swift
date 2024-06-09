@@ -75,20 +75,6 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate, UITextVie
         return annotationView
     }
     
-    
-//    func addAnnotation(location: CLLocationCoordinate2D, title: String) {
-////        print("starting to annotate")
-//        let annotation = MKPointAnnotation()
-//        annotation.coordinate = location
-//        annotation.title = title
-//        mapView.addAnnotation(annotation)
-////        mapView.selectAnnotation(annotation, animated: true)
-//        
-//        let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 100000, longitudinalMeters: 100000)
-//        mapView.setRegion(coordinateRegion, animated: true)
-////        setInitialLocation(location: location)
-//    }
-    
 
     @IBAction func submitTapped(_ sender: UIButton) {
         print("Submit button tapped")

@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: Define the client to handle API calls
 class UdacityClient {
     
     struct Auth {
@@ -41,6 +42,7 @@ class UdacityClient {
         }
     }
     
+    // MARK: Login Handler
     class func udacityLogin(username: String, password: String, completionHandler: @escaping (Bool, Error?) -> Void) {
         var request = URLRequest(url: Endpoints.postSession.url)
         request.httpMethod = "POST"
@@ -63,7 +65,7 @@ class UdacityClient {
             } catch {
                 do {
                     let errorResponse = try decoder.decode(PostSessionErrorResponse.self, from: data)
-                    print(errorResponse.errorMessage)
+//                    print(errorResponse.errorMessage)
                     completionHandler(false, errorResponse)
                 } catch {
                     completionHandler(false, error)
@@ -75,6 +77,7 @@ class UdacityClient {
     task.resume()
     }
     
+    //MARK: Posting the student location to Parse
     class func postStudentLocation(studentInfo: PostStudentLocation, completionHandler: @escaping (Bool, Error?) -> Void) {
         print(studentInfo)
         
@@ -90,27 +93,27 @@ class UdacityClient {
                 return
             }
             
-            print("Received Data")
+//            print("Received Data")
             guard let data = data else {
                 return
             }
             
-            print(String(data: data, encoding: .utf8)!)
+//            print(String(data: data, encoding: .utf8)!)
             
             let decoder = JSONDecoder()
             do {
                 let responseObject = try decoder.decode(PostStudentLocationResponse.self, from: data)
-                print(responseObject)
+//                print(responseObject)
                 completionHandler(true, nil)
             } catch {
                 do {
                     let errorResponse = try decoder.decode(PostStudentLocationErrorResponse.self, from: data)
-                    print(errorResponse.error)
+//                    print(errorResponse.error)
                     completionHandler(false, errorResponse)
                 } catch {
                     completionHandler(false, error)
                 }
-                print("Decode failed")
+//                print("Decode failed")
                 completionHandler(false, error)
             }
         }
@@ -118,6 +121,7 @@ class UdacityClient {
     }
     
     
+    // MARK: Get public user data given accountId
     class func getPublicUserData() {
         let task = URLSession.shared.dataTask(with: Endpoints.getPublicUserdata(Auth.udacityAccountId).url) {
             data, response, error in
@@ -132,7 +136,7 @@ class UdacityClient {
                 let responseObject = try decoder.decode(UserPublicData.self, from: data)
                 Auth.firstName = responseObject.firstName
                 Auth.lastName = responseObject.lastName
-                print(Auth.udacityAccountId, Auth.firstName, Auth.lastName)
+//                print(Auth.udacityAccountId, Auth.firstName, Auth.lastName)
             } catch {
                 print("Decode Error")
             }
@@ -140,7 +144,7 @@ class UdacityClient {
         task.resume()
     }
     
-    
+    // MARK: Delete session on logout
     class func deleteSession() {
         // same url as posting a session
         var request = URLRequest(url: Endpoints.postSession.url)
@@ -178,6 +182,7 @@ class UdacityClient {
         task.resume()
     }
     
+    // MARK: Get student list on segue
     class func getStudentList(completionHandler: @escaping ([Student], Error?) -> Void) {
 //        print("Making a getStudentcall")
         let task = URLSession.shared.dataTask(with: Endpoints.getStudentList.url) {

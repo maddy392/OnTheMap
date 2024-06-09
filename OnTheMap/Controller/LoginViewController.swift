@@ -18,8 +18,6 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-//        loginWithFBButton.addTarget(self, action: #selector(loginWithFbButtonClicked), for: .touchUpInside)
         loginWithFBButton.delegate = self
         loginWithFBButton.permissions = ["public_profile", "email"]
     }
@@ -31,7 +29,7 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         passwordTextField.text = ""
     }
     
-    
+    // MARK: Login with FB
     func loginButton(_ loginButton: FBSDKLoginKit.FBLoginButton, didCompleteWith result: FBSDKLoginKit.LoginManagerLoginResult?, error: (any Error)?) {
 //        setLogginIn(true)
         if let error = error {
@@ -57,12 +55,13 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         }
     }
     
+    // Logout
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginKit.FBLoginButton) {
 //        setLogginIn(false)
         print("Logged Out")
     }
     
-    
+    // MARK: Login using username and password
     @IBAction func loginButtonTapped(_ sender: Any) {
         UdacityClient.udacityLogin(username: emailTextField.text ?? "", password: passwordTextField.text ?? "") { success, error in
             if success {
@@ -81,7 +80,7 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         }
     }
     
-    
+    // MARK: Alert with error messge on wrong credentials
     func showLoginFailure(message: String) {
         let alertVC = UIAlertController(title: "Login Failed", message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))

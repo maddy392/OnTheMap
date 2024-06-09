@@ -11,6 +11,7 @@ import MapKit
 class StudentMapViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
+    // used initialLocation variable so that when student submits a location, the map focuses on that location
     var initialLocation: CLLocation?
 
     
@@ -19,17 +20,6 @@ class StudentMapViewController: UIViewController, MKMapViewDelegate {
 
         // Do any additional setup after loading the view.
         mapView.delegate = self
-//        reloadMapData()
-        
-//        // Do any additional setup after loading the view.
-//        let _ = UdacityClient.getStudentList { students, error in
-//            StudentList.studentList = students
-////            print(StudentList.annotations)
-//            
-//            DispatchQueue.main.async {
-//                self.reloadMapData()
-//            }
-//        }
     }
     
     
@@ -43,8 +33,8 @@ class StudentMapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    
     func reloadMapData() {
-        
         let _ = UdacityClient.getStudentList { students, error in
             print("Fetching student data")
 //            print(students.isEmpty)

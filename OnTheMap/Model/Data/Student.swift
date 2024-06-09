@@ -19,6 +19,7 @@ struct Student: Codable {
     let longitude: Double
 }
 
+// MARK: convert student info into usabel annotations
 func createAnnotation(student: Student) -> MKPointAnnotation {
     let annotation = MKPointAnnotation()
     annotation.coordinate = CLLocationCoordinate2D(latitude: student.latitude, longitude: student.longitude)
