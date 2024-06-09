@@ -27,8 +27,8 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        emailTextField.text = "maddy392@gmail.com"
-        passwordTextField.text = "Panimavi1!"
+        emailTextField.text = ""
+        passwordTextField.text = ""
     }
     
     
@@ -87,18 +87,5 @@ class LoginViewController: UIViewController, LoginButtonDelegate {
         alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         show(alertVC, sender: nil)
     }
-    
-    
-//    func setLogginIn(_ loggingIn: Bool) {
-//        if loggingIn {
-//            activityIndicator.startAnimating()
-//        } else {
-//            activityIndicator.stopAnimating()
-//        }
-//        
-//        emailTextField.isEnabled = !loggingIn
-//        passwordTextField.isEnabled = !loggingIn
-//        loginButton.isEnabled = !loggingIn
-//    }
     
 }

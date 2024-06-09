@@ -21,3 +21,14 @@ struct PostStudentLocationResponse: Codable {
     let objectId: String
     let createdAt: String
 }
+
+struct PostStudentLocationErrorResponse: Codable {
+    let code: Int
+    let error: String
+}
+
+extension PostStudentLocationErrorResponse: LocalizedError {
+    var errorDescription: String? {
+        return error
+    }
+}

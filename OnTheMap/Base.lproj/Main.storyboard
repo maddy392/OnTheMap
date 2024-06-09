@@ -211,6 +211,10 @@
                                     <action selector="findOnMap:" destination="nSM-pj-Wfg" eventType="touchUpInside" id="H3L-2h-sgA"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="K9y-04-sj1">
+                                <rect key="frame" x="186" y="696" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8zR-nR-DV2"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -227,8 +231,15 @@
                             <constraint firstItem="InR-0r-MFn" firstAttribute="top" secondItem="g88-fA-dqb" secondAttribute="bottom" constant="8" id="yXl-yf-ZfU"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="zd9-It-6Yc"/>
+                    <navigationItem key="navigationItem" id="zd9-It-6Yc">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="SGU-Is-2sY">
+                            <connections>
+                                <action selector="tapCancelButton:" destination="nSM-pj-Wfg" id="Akk-Pp-EZN"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="K9y-04-sj1" id="IFs-RA-W2g"/>
                         <outlet property="locationTextView" destination="InR-0r-MFn" id="S2y-SS-owx"/>
                         <segue destination="31x-L1-uMi" kind="show" identifier="geocode" id="b3o-41-WY5"/>
                     </connections>
@@ -285,6 +296,7 @@
                     <connections>
                         <outlet property="mapView" destination="kj3-Hb-35b" id="6dz-lv-s6C"/>
                         <outlet property="mediaURLTextView" destination="rre-kM-mic" id="TMg-yX-Yt8"/>
+                        <outlet property="submitButton" destination="oJb-Dt-RiW" id="Hge-XQ-gEk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5u6-CR-vWg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

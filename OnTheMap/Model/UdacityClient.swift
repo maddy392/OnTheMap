@@ -76,6 +76,7 @@ class UdacityClient {
     }
     
     class func postStudentLocation(studentInfo: PostStudentLocation, completionHandler: @escaping (Bool, Error?) -> Void) {
+        print(studentInfo)
         
         var request = URLRequest(url: Endpoints.postLocation.url)
         request.httpMethod = "POST"
@@ -102,6 +103,13 @@ class UdacityClient {
                 print(responseObject)
                 completionHandler(true, nil)
             } catch {
+                do {
+                    let errorResponse = try decoder.decode(PostStudentLocationErrorResponse.self, from: data)
+                    print(errorResponse.error)
+                    completionHandler(false, errorResponse)
+                } catch {
+                    completionHandler(false, error)
+                }
                 print("Decode failed")
                 completionHandler(false, error)
             }

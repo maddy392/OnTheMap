@@ -11,13 +11,15 @@ import MapKit
 class StudentMapViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
+    var initialLocation: CLLocation?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         mapView.delegate = self
-        reloadMapData()
+//        reloadMapData()
         
 //        // Do any additional setup after loading the view.
 //        let _ = UdacityClient.getStudentList { students, error in
@@ -35,19 +37,34 @@ class StudentMapViewController: UIViewController, MKMapViewDelegate {
         super.viewWillAppear(animated)
         navigationItem.title = "Map View"
         self.reloadMapData()
+        
+        if let initialLocation = initialLocation {
+            setInitialLocation(location: initialLocation)
+        }
     }
     
     func reloadMapData() {
         
         let _ = UdacityClient.getStudentList { students, error in
             print("Fetching student data")
-            StudentList.studentList = students
-            
-            DispatchQueue.main.async {
-                self.mapView.removeAnnotations(self.mapView.annotations)
-                self.mapView.addAnnotations(StudentList.annotations)
+//            print(students.isEmpty)
+            if !students.isEmpty {
+                StudentList.studentList = students
+                
+                DispatchQueue.main.async {
+                    self.mapView.removeAnnotations(self.mapView.annotations)
+                    self.mapView.addAnnotations(StudentList.annotations)
+                }
+            } else {
+                self.showTapFailure(message: "Students' Location Download Failed.")
+                print("Fetching student data failed")
             }
         }
+    }
+    
+    func setInitialLocation(location: CLLocation, regionRadius: CLLocationDistance = 5000000) {
+        let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+        mapView.setRegion(coordinateRegion, animated: true)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: any MKAnnotation) -> MKAnnotationView? {

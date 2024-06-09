@@ -9,38 +9,56 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class PostLocationViewController: UIViewController, MKMapViewDelegate {
+class PostLocationViewController: UIViewController, MKMapViewDelegate, UITextViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
-    var address: String!
+    var address: String?
     var geocodedLocation: CLLocationCoordinate2D?
+    var geocodeSuccess: Bool = false
     @IBOutlet weak var mediaURLTextView: UITextView!
-    //    let initialLocation = CLLocation(latitude: 36.1627, longitude: -86.7816)
-
+    @IBOutlet weak var submitButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        setInitialLocation(location: initialLocation)
-        geocodeAddress(address)
+        if geocodeSuccess, let location = geocodedLocation, let address = address {
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location
+            annotation.title = address
+            mapView.addAnnotation(annotation)
+            mapView.setRegion(MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10)), animated: true)
+        }
+        
+        else {
+            self.submitButton.isHidden = true
+            showAlertAndReturn()
+        }
+        
+        mediaURLTextView.delegate = self
+        mediaURLTextView.text = "https://google.com"
+        mediaURLTextView.textColor = .lightGray
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        mediaURLTextView.text = nil
+        mediaURLTextView.textColor = UIColor.black
+    }
+    
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if mediaURLTextView.text.isEmpty {
+            mediaURLTextView.text = "Enter your location here"
+            mediaURLTextView.textColor = .lightGray
+        }
     }
     
     
-    func geocodeAddress(_ address: String) {
-        let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(address) { placements, error in
-            if let error = error {
-                print("Geocoding error: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let placement = placements?.first, let location = placement.location else {
-                print("No location found")
-                return
-            }
-            self.geocodedLocation = location.coordinate
-            self.addAnnotation(location: location, title: address)
-        }
+    func showAlertAndReturn() {
+        let alertVC = UIAlertController(title: "Login Failed", message: "Geocoding Failed. Please try again!\n Couldn't geocode '\(address ?? "")'", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: {
+            _ in self.navigationController?.popViewController(animated: true)}))
+        present(alertVC, animated: true, completion: nil)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: any MKAnnotation) -> MKAnnotationView? {
@@ -57,23 +75,19 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
         return annotationView
     }
     
-//    func setInitialLocation(location: CLLocation, regionRadius: CLLocationDistance = 10000) {
-//        let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
-//        mapView.setRegion(coordinateRegion, animated: true)
-//    }
     
-    func addAnnotation(location: CLLocation, title: String) {
-//        print("starting to annotate")
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = location.coordinate
-        annotation.title = title
-        mapView.addAnnotation(annotation)
-//        mapView.selectAnnotation(annotation, animated: true)
-        
-        let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 100000, longitudinalMeters: 100000)
-        mapView.setRegion(coordinateRegion, animated: true)
-//        setInitialLocation(location: location)
-    }
+//    func addAnnotation(location: CLLocationCoordinate2D, title: String) {
+////        print("starting to annotate")
+//        let annotation = MKPointAnnotation()
+//        annotation.coordinate = location
+//        annotation.title = title
+//        mapView.addAnnotation(annotation)
+////        mapView.selectAnnotation(annotation, animated: true)
+//        
+//        let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 100000, longitudinalMeters: 100000)
+//        mapView.setRegion(coordinateRegion, animated: true)
+////        setInitialLocation(location: location)
+//    }
     
 
     @IBAction func submitTapped(_ sender: UIButton) {
@@ -92,27 +106,33 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
         let lastName = UdacityClient.Auth.lastName
         let mapString = address
         
-        UdacityClient.postStudentLocation(studentInfo: PostStudentLocation(uniqueKey: uniqueKey, firstName: firstName, lastName: lastName, mapString: mapString!, mediaURL: mediaURL!, latitude: latitude, longitude: longitude)) { success, error in
+        let postStudentLocationBody = PostStudentLocation(uniqueKey: uniqueKey, firstName: firstName, lastName: lastName, mapString: mapString!, mediaURL: mediaURL!, latitude: latitude, longitude: longitude)
+        
+        UdacityClient.postStudentLocation(studentInfo: postStudentLocationBody) { success, error in
+            print(success)
             if success {
                 DispatchQueue.main.async {
                     if let navigationController = self.tabBarController?.viewControllers?[0] as? UINavigationController {
+                        if let firstTabVC = navigationController.viewControllers.first as? StudentMapViewController {
+                            firstTabVC.initialLocation = CLLocation(latitude: latitude, longitude: longitude)
+                        }
                         navigationController.popToRootViewController(animated: true)
                     }
                 }
             } else {
                 print("post student loc failed")
+                DispatchQueue.main.async {
+                    self.showAlert(error?.localizedDescription ?? "")
+                }
             }
         }
         
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func showAlert(_ message: String) {
+        let alertVC = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alertVC, animated: true, completion: nil)
     }
-    */
 
 }
