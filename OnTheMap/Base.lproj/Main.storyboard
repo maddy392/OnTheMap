@@ -188,14 +188,18 @@
                                 <rect key="frame" x="16" y="56" width="361" height="223"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="223" id="MEg-kF-GuP"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="223" id="o9f-Fj-V9l"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter Your Location Here" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="InR-0r-MFn">
-                                <rect key="frame" x="16" y="287" width="361" height="275"/>
+                                <rect key="frame" x="16" y="287" width="361" height="75"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="ZWz-Cv-Qcs"/>
+                                </constraints>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -211,24 +215,43 @@
                                     <action selector="findOnMap:" destination="nSM-pj-Wfg" eventType="touchUpInside" id="H3L-2h-sgA"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="K9y-04-sj1">
-                                <rect key="frame" x="186" y="696" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="K9y-04-sj1">
+                                <rect key="frame" x="186" y="696" width="21" height="20"/>
                             </activityIndicatorView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="8fe-4X-0Ng" userLabel="SearchAutoComplete">
+                                <rect key="frame" x="16" y="370" width="361" height="276"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="autocompleteCell" id="Fyo-kw-Spj">
+                                        <rect key="frame" x="0.0" y="50" width="361" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Fyo-kw-Spj" id="OYb-2M-X6T">
+                                            <rect key="frame" x="0.0" y="0.0" width="361" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8zR-nR-DV2"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="noK-cj-XOr" firstAttribute="leading" secondItem="8zR-nR-DV2" secondAttribute="leading" constant="16" id="53F-yT-NSU"/>
+                            <constraint firstItem="8zR-nR-DV2" firstAttribute="trailing" secondItem="8fe-4X-0Ng" secondAttribute="trailing" constant="16" id="Bu4-Bb-Jp4"/>
                             <constraint firstItem="g88-fA-dqb" firstAttribute="top" secondItem="8zR-nR-DV2" secondAttribute="top" id="KED-kR-Qo6"/>
                             <constraint firstItem="8zR-nR-DV2" firstAttribute="trailing" secondItem="g88-fA-dqb" secondAttribute="trailing" constant="16" id="RXi-NE-uR5"/>
                             <constraint firstItem="g88-fA-dqb" firstAttribute="leading" secondItem="8zR-nR-DV2" secondAttribute="leading" constant="16" id="SyD-4N-FTB"/>
+                            <constraint firstItem="8fe-4X-0Ng" firstAttribute="centerX" secondItem="K9y-04-sj1" secondAttribute="centerX" id="TDN-xb-MTK"/>
+                            <constraint firstItem="8fe-4X-0Ng" firstAttribute="top" secondItem="InR-0r-MFn" secondAttribute="bottom" constant="8" symbolic="YES" id="TVm-Un-4Bx"/>
                             <constraint firstItem="InR-0r-MFn" firstAttribute="leading" secondItem="noK-cj-XOr" secondAttribute="leading" id="VHH-Ru-xSJ"/>
+                            <constraint firstItem="noK-cj-XOr" firstAttribute="top" secondItem="8fe-4X-0Ng" secondAttribute="bottom" constant="8" symbolic="YES" id="VNY-3z-wAr"/>
                             <constraint firstItem="8zR-nR-DV2" firstAttribute="trailing" secondItem="noK-cj-XOr" secondAttribute="trailing" constant="16" id="Wn1-CH-Lu2"/>
                             <constraint firstItem="InR-0r-MFn" firstAttribute="trailing" secondItem="noK-cj-XOr" secondAttribute="trailing" id="iso-Hx-AMb"/>
                             <constraint firstItem="8zR-nR-DV2" firstAttribute="bottom" secondItem="noK-cj-XOr" secondAttribute="bottom" constant="154" id="nBw-1Q-bdg"/>
-                            <constraint firstItem="noK-cj-XOr" firstAttribute="top" secondItem="InR-0r-MFn" secondAttribute="bottom" constant="92" id="uyw-pW-9MC"/>
+                            <constraint firstItem="K9y-04-sj1" firstAttribute="top" secondItem="noK-cj-XOr" secondAttribute="bottom" constant="8" symbolic="YES" id="nEf-eg-GHI"/>
+                            <constraint firstItem="K9y-04-sj1" firstAttribute="leading" secondItem="8zR-nR-DV2" secondAttribute="leading" constant="186" id="oxa-8Z-O4p"/>
                             <constraint firstItem="InR-0r-MFn" firstAttribute="top" secondItem="g88-fA-dqb" secondAttribute="bottom" constant="8" id="yXl-yf-ZfU"/>
+                            <constraint firstItem="8fe-4X-0Ng" firstAttribute="leading" secondItem="8zR-nR-DV2" secondAttribute="leading" constant="16" id="ztb-9A-VQT"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="zd9-It-6Yc">
@@ -240,6 +263,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="K9y-04-sj1" id="IFs-RA-W2g"/>
+                        <outlet property="autocompleteResults" destination="8fe-4X-0Ng" id="Wh7-yI-YFv"/>
                         <outlet property="locationTextView" destination="InR-0r-MFn" id="S2y-SS-owx"/>
                         <segue destination="31x-L1-uMi" kind="show" identifier="geocode" id="b3o-41-WY5"/>
                     </connections>
@@ -362,7 +386,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="4vf-ko-9n9"/>
+        <segue reference="ltq-Vb-tp7"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="list.dash" catalog="system" width="128" height="85"/>

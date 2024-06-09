@@ -102,7 +102,7 @@ class UdacityClient {
             
             let decoder = JSONDecoder()
             do {
-                let responseObject = try decoder.decode(PostStudentLocationResponse.self, from: data)
+                let _ = try decoder.decode(PostStudentLocationResponse.self, from: data)
 //                print(responseObject)
                 completionHandler(true, nil)
             } catch {
