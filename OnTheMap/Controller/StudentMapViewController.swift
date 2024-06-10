@@ -35,7 +35,7 @@ class StudentMapViewController: UIViewController, MKMapViewDelegate {
     
     
     func reloadMapData() {
-        let _ = UdacityClient.getStudentList { students, error in
+        UdacityClient.getStudentList { students, error in
             print("Fetching student data")
 //            print(students.isEmpty)
             if !students.isEmpty {

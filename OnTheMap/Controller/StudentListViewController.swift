@@ -8,19 +8,21 @@
 import UIKit
 
 class StudentListViewController: UIViewController {
-
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        reloadTableData()
+        
         // Do any additional setup after loading the view.
-        let _ = UdacityClient.getStudentList { students, error in
-            StudentList.studentList = students
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
+        //        let _ = UdacityClient.getStudentList { students, error in
+        //            StudentList.studentList = students
+        //            DispatchQueue.main.async {
+        //                self.tableView.reloadData()
+        //            }
+        //        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -28,7 +30,24 @@ class StudentListViewController: UIViewController {
         tableView.reloadData()
         navigationItem.title = "Student List"
     }
+    //}
+    
+    func reloadTableData() {
+        UdacityClient.getStudentList { students, error in
+            if !students.isEmpty {
+                StudentList.studentList = students
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            } else {
+                self.showTapFailure(message: "Students' Location Download Failed.")
+                print("Fetching student data failed")
+            }
+        }
+    }
 }
+
 
 extension StudentListViewController: UITableViewDataSource, UITableViewDelegate {
     

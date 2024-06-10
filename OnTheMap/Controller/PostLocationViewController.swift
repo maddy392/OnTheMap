@@ -98,11 +98,16 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate, UITextVie
             print(success)
             if success {
                 DispatchQueue.main.async {
-                    if let navigationController = self.tabBarController?.viewControllers?[0] as? UINavigationController {
-                        if let firstTabVC = navigationController.viewControllers.first as? StudentMapViewController {
-                            firstTabVC.initialLocation = CLLocation(latitude: latitude, longitude: longitude)
-                        }
-                        navigationController.popToRootViewController(animated: true)
+                    if let tabBarController = self.tabBarController {
+                        tabBarController.selectedIndex = 0 // Switch to the map view tab
+                            if let navigationController = tabBarController.viewControllers?[0] as? UINavigationController {
+                                print(navigationController.viewControllers)
+                                if let firstTabVC = navigationController.viewControllers.first as? StudentMapViewController {
+                                    print("instantiated firstabVC as studentmapviewcontroller")
+                                    firstTabVC.initialLocation = CLLocation(latitude: latitude, longitude: longitude)
+                                    navigationController.popToRootViewController(animated: true)
+                                }
+                            }
                     }
                 }
             } else {

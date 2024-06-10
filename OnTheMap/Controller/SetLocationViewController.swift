@@ -130,7 +130,7 @@ class SetLocationViewController: UIViewController, UITextViewDelegate, UITableVi
     
     @IBAction func tapCancelButton(_ sender: Any) {
         
-        self.navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
         
     }
     
