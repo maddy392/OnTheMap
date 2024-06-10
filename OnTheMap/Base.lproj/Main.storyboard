@@ -113,14 +113,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="g3J-Y9-haQ">
-                        <barButtonItem key="leftBarButtonItem" image="mappin.and.ellipse" catalog="system" style="done" id="G7q-BE-jeF">
-                            <connections>
-                                <action selector="postALocation:" destination="u7O-eR-ypv" id="rkY-JL-UH3"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Logout" id="q8H-VC-PcL">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="q8H-VC-PcL">
                             <connections>
                                 <action selector="logoutTapped:" destination="u7O-eR-ypv" id="1Zv-Xe-h3E"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="mappin.and.ellipse" catalog="system" style="done" id="G7q-BE-jeF">
+                            <connections>
+                                <action selector="postALocation:" destination="u7O-eR-ypv" id="rkY-JL-UH3"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -156,14 +156,14 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="6Vd-dz-ffM">
-                        <barButtonItem key="leftBarButtonItem" image="mappin.and.ellipse" catalog="system" style="done" id="aty-mh-57Z">
-                            <connections>
-                                <action selector="postALocation:" destination="PUp-yP-9Aj" id="QsH-ZR-cM8"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Logout" id="OY9-kx-3l2">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="OY9-kx-3l2">
                             <connections>
                                 <action selector="logoutTapped:" destination="PUp-yP-9Aj" id="UXE-O0-htT"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="mappin.and.ellipse" catalog="system" style="done" id="aty-mh-57Z">
+                            <connections>
+                                <action selector="postALocation:" destination="PUp-yP-9Aj" id="QsH-ZR-cM8"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
